@@ -37,15 +37,6 @@ const AMAZON = "Amazon",
   ZEBRA = "Zebra",
   FACEBOOK = "Facebook";
 
-function enumerize(arr: string[]) {
-  const enums: Record<string, string> = {};
-  for (const i in arr) {
-    enums[arr[i].toUpperCase()] = arr[i];
-  }
-
-  return enums;
-}
-
 function has(str1: string | undefined, str2: string) {
   return typeof str1 === "string"
     ? lowerize(str2).indexOf(lowerize(str1)) !== -1
@@ -1114,14 +1105,11 @@ export function parse(ua: string): Result {
   };
 }
 
-export const DEVICE = enumerize([
-  MODEL,
-  VENDOR,
-  TYPE,
-  CONSOLE,
-  MOBILE,
-  SMARTTV,
-  TABLET,
-  WEARABLE,
-  EMBEDDED,
-]);
+export const DEVICE = {
+  CONSOLE: CONSOLE,
+  MOBILE: MOBILE,
+  SMARTTV: SMARTTV,
+  TABLET: TABLET,
+  WEARABLE: WEARABLE,
+  EMBEDDED: EMBEDDED,
+};
