@@ -49,18 +49,18 @@ function lowerize(str: string) {
 
 function majorize(version: string | undefined) {
   return typeof version === "string"
-    ? version.replace(/[^\d\.]/g, EMPTY).split(".")[0]
+    ? version.replace(/[^\d\.]/g, "").split(".")[0]
     : undefined;
 }
 
 function trim(str: string | undefined, len: number) {
   if (typeof str === "string") {
-    str = str.replace(/^\s\s*/, EMPTY).replace(/\s\s*$/, EMPTY);
+    str = str.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
     return len === undefined ? str : str.substring(0, UA_MAX_LENGTH);
   }
 }
 
-function rgxMapper(ua: string, arrays: PatternArray) {
+function mapMatches(ua: string, arrays: PatternArray) {
   let i = 0,
     j,
     k,
@@ -420,12 +420,6 @@ const regexes: Record<string, PatternArray> = {
 
   device: [
     [
-      //////////////////////////
-      // MOBILES & TABLETS
-      // Ordered by popularity
-      /////////////////////////
-
-      // Samsung
       /\b(sch-i[89]0\d|shw-m380s|sm-[pt]\w{2,4}|gt-[pn]\d{2,4}|sgh-t8[56]9|nexus 10)/i,
     ],
     [MODEL, [VENDOR, SAMSUNG], [TYPE, TABLET]],
@@ -755,10 +749,6 @@ const regexes: Record<string, PatternArray> = {
     [/droid.+; (ec30|ps20|tc[2-8]\d[kx])\)/i],
     [MODEL, [VENDOR, ZEBRA], [TYPE, MOBILE]],
     [
-      ///////////////////
-      // CONSOLES
-      ///////////////////
-
       /(ouya)/i, // Ouya
       /(nintendo) ([wids3utch]+)/i, // Nintendo
     ],
@@ -776,10 +766,6 @@ const regexes: Record<string, PatternArray> = {
     ],
     [MODEL, [VENDOR, MICROSOFT], [TYPE, CONSOLE]],
     [
-      ///////////////////
-      // SMARTTVS
-      ///////////////////
-
       /smart-tv.+(samsung)/i, // Samsung
     ],
     [VENDOR, [TYPE, SMARTTV]],
@@ -830,10 +816,6 @@ const regexes: Record<string, PatternArray> = {
     ],
     [[TYPE, SMARTTV]],
     [
-      ///////////////////
-      // WEARABLES
-      ///////////////////
-
       /((pebble))app/i, // Pebble
     ],
     [VENDOR, MODEL, [TYPE, WEARABLE]],
@@ -848,18 +830,10 @@ const regexes: Record<string, PatternArray> = {
     ],
     [MODEL, [VENDOR, FACEBOOK], [TYPE, WEARABLE]],
     [
-      ///////////////////
-      // EMBEDDED
-      ///////////////////
-
       /(tesla)(?: qtcarbrowser|\/[-\w\.]+)/i, // Tesla
     ],
     [VENDOR, [TYPE, EMBEDDED]],
     [
-      ////////////////////
-      // MIXED (GENERIC)
-      ///////////////////
-
       /droid .+?; ([^;]+?)(?: bui|\) applew).+? mobile safari/i, // Android Phones from Unidentified Vendors
     ],
     [MODEL, [TYPE, MOBILE]],
@@ -1044,7 +1018,7 @@ type Result = {
 
 export function parse(ua: string): Result {
   function getBrowser(): Browser {
-    const result = rgxMapper(ua, regexes.browser);
+    const result = mapMatches(ua, regexes.browser);
     const version =
       typeof result[VERSION] === "string" ? result[VERSION] : undefined;
 
@@ -1056,7 +1030,7 @@ export function parse(ua: string): Result {
   }
 
   function getCPU(): CPU {
-    const result = rgxMapper(ua, regexes.cpu);
+    const result = mapMatches(ua, regexes.cpu);
 
     return {
       architecture:
@@ -1067,7 +1041,7 @@ export function parse(ua: string): Result {
   }
 
   function getDevice(): Device {
-    const result = rgxMapper(ua, regexes.device);
+    const result = mapMatches(ua, regexes.device);
 
     return {
       vendor: typeof result[VENDOR] === "string" ? result[VENDOR] : undefined,
@@ -1077,7 +1051,7 @@ export function parse(ua: string): Result {
   }
 
   function getEngine(): Engine {
-    const result = rgxMapper(ua, regexes.engine);
+    const result = mapMatches(ua, regexes.engine);
 
     return {
       name: typeof result[NAME] === "string" ? result[NAME] : undefined,
@@ -1087,7 +1061,7 @@ export function parse(ua: string): Result {
   }
 
   function getOS(): OS {
-    const result = rgxMapper(ua, regexes.os);
+    const result = mapMatches(ua, regexes.os);
 
     return {
       name: typeof result[NAME] === "string" ? result[NAME] : undefined,
