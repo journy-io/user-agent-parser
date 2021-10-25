@@ -4,6 +4,8 @@
     "lib": ["ES2019", "DOM"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "outDir": "./dist",
     "declaration": true,
     "strict": true
