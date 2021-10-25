@@ -28,7 +28,14 @@
   },
   "sideEffects": false,
   "keywords": [
-    "TODO"
+    "ua-parser-js",
+    "user-agent",
+    "parser",
+    "device",
+    "os",
+    "architecture",
+    "tv",
+    "wearable"
   ],
   "author": "journy.io",
   "license": "MIT",
