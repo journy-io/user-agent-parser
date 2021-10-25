@@ -17,6 +17,7 @@ Why choose this package over [faisalman/ua-parser-js](https://github.com/faisalm
 * TypeScript types
 * Written in TypeScript
 * Not much of a target because less popular
+* Drop-in replacement
 
 Is this package maintained?
 

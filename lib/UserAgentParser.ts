@@ -1,3 +1,6 @@
+// Forked from https://github.com/faisalman/ua-parser-js
+// Thanks for creating it!
+
 const EMPTY = "",
   UNKNOWN = "?",
   MODEL = "model",
